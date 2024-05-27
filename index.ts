@@ -75,6 +75,11 @@ export default class Kink extends CustomError {
     return Kink
   }
 
+  static time = (hook: TimeHook) => {
+    timeHook = hook
+    return Kink
+  }
+
   static make = (host: string, form: string, take?: any) => {
     const time = timeHook(Date.now())
     const hook = base[`${host}:${form}`]
