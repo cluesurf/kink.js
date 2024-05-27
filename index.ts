@@ -19,6 +19,7 @@ export type KinkMesh = {
   // HTTP code
   siteCode?: number
   take?: Link
+  time: string
 }
 
 export type KinkMeshBase = {
@@ -26,12 +27,16 @@ export type KinkMeshBase = {
   note: string
 }
 
+export type Link = Record<string, unknown>
+
 const base: Record<string, BaseHook> = {}
 const load: Record<string, LoadHook> = {}
 const fill: Record<string, FillHook> = {}
 const code: Record<string, (code: number) => string> = {}
 
-export type Link = Record<string, unknown>
+let timeHook: TimeHook = (time: number) => String(time)
+
+export type LoadHook<T extends any = any> = (take?: T) => Link
 
 export default class Kink extends CustomError {
   form: string
@@ -47,6 +52,8 @@ export default class Kink extends CustomError {
   siteCode?: number
 
   take?: Link
+
+  time: string
 
   static base = (host: string, form: string, hook: BaseHook) => {
     base[`${host}:${form}`] = hook
@@ -69,6 +76,7 @@ export default class Kink extends CustomError {
   }
 
   static make = (host: string, form: string, take?: any) => {
+    const time = timeHook(Date.now())
     const hook = base[`${host}:${form}`]
     if (!hook) {
       throw new Error(`Missing ${host}:${form} in Kink.base`)
@@ -80,6 +88,7 @@ export default class Kink extends CustomError {
       form,
       host,
       take: take as Link,
+      time,
     })
 
     Kink.saveLoad(kink, take)
@@ -117,9 +126,10 @@ export default class Kink extends CustomError {
     kink: Error,
     {
       siteCode,
-      stack = false,
-    }: { siteCode?: number; stack?: boolean } = {},
+      list = false,
+    }: { list?: boolean; siteCode?: number } = {},
   ) => {
+    const time = timeHook(Date.now())
     return new Kink({
       code:
         'code' in kink
@@ -134,6 +144,7 @@ export default class Kink extends CustomError {
       // list: stack ? kink.stack?.split('\n') ?? [] : [],
       note: kink.message,
       siteCode,
+      time,
     })
   }
 
@@ -145,6 +156,7 @@ export default class Kink extends CustomError {
     take,
     link = {},
     code,
+    time,
   }: KinkMesh) {
     super(note)
 
@@ -160,6 +172,7 @@ export default class Kink extends CustomError {
       writable: true,
     })
 
+    this.time = time
     this.host = host
     this.form = form
     this.code = code
@@ -176,22 +189,25 @@ export default class Kink extends CustomError {
       host: this.host,
       link: this.link,
       note: this.note,
+      time: this.time,
     }
   }
 }
 
-export type LoadHook<T extends any = any> = (take?: T) => Link
+export type TimeHook = (time: number) => string
 
 // eslint-disable-next-line sort-exports/sort-exports
 export class KinkList extends Kink {
   list: Array<Kink>
 
   constructor(list: Array<Kink>) {
+    const time = timeHook(Date.now())
     super({
       code: Kink.makeCode('@termsurf/kink', 0),
       form: 'list',
       host: '@termsurf/kink',
       note: 'A set of errors occurred.',
+      time,
     })
     this.list = list
   }

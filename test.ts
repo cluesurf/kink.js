@@ -1,7 +1,7 @@
 import kink from './example.js'
 
 try {
-  throw kink('syntax_error')
+  throw kink('syntax_error', { foo: 'bar' })
 } catch (e) {
   console.log(e)
 }

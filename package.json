@@ -1,20 +1,20 @@
 {
   "name": "@termsurf/kink",
   "type": "module",
-  "version": "0.1.6",
-  "main": "./make/index.js",
+  "version": "0.2.0",
+  "main": "./host/index.js",
   "license": "MIT",
   "files": [
-    "./make/index.js",
-    "./make/index.js.map",
-    "./make/index.d.ts"
+    "./host/index.js",
+    "./host/index.js.map",
+    "./host/index.d.ts"
   ],
   "scripts": {
     "make": "tsc && tsc-alias",
     "scan": "concurrently --kill-others \"tsc -w\" \"tsc-alias -w\"",
     "lint": "eslint --ext .ts ./make",
     "lint:fix": "npm run lint -- --fix",
-    "test": "npx ts-node-esm test.ts",
+    "test": "tsx test.ts",
     "host": "pnpm make && npm publish --access=public"
   },
   "devDependencies": {
@@ -40,6 +40,7 @@
     "prettier": "^2.8.1",
     "ts-node": "^10.9.1",
     "tsc-alias": "^1.8.2",
+    "tsx": "^4.11.0",
     "typescript": "^5.0.4"
   },
   "dependencies": {
