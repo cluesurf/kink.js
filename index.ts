@@ -80,8 +80,12 @@ export default class Kink extends CustomError {
     return Kink
   }
 
+  static makeTime = (time: number) => {
+    return timeHook(time)
+  }
+
   static make = (host: string, form: string, take?: any) => {
-    const time = timeHook(Date.now())
+    const time = Kink.makeTime(Date.now())
     const hook = base[`${host}:${form}`]
     if (!hook) {
       throw new Error(`Missing ${host}:${form} in Kink.base`)
@@ -134,7 +138,7 @@ export default class Kink extends CustomError {
       list = false,
     }: { list?: boolean; siteCode?: number } = {},
   ) => {
-    const time = timeHook(Date.now())
+    const time = Kink.makeTime(Date.now())
     return new Kink({
       code:
         'code' in kink
@@ -206,7 +210,7 @@ export class KinkList extends Kink {
   list: Array<Kink>
 
   constructor(list: Array<Kink>) {
-    const time = timeHook(Date.now())
+    const time = Kink.makeTime(Date.now())
     super({
       code: Kink.makeCode('@termsurf/kink', 0),
       form: 'list',
