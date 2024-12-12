@@ -1,7 +1,7 @@
 {
   "name": "@cluesurf/kink",
   "type": "module",
-  "version": "0.2.3",
+  "version": "1.0.0",
   "main": "./host/index.js",
   "license": "MIT",
   "files": [
