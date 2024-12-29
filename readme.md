@@ -6,7 +6,7 @@
 <br/>
 <br/>
 
-<h3 align='center'>@termsurf/kink</h3>
+<h3 align='center'>@cluesurf/kink</h3>
 <p align='center'>
   Standard Error Creation in TypeScript
 </p>
@@ -18,17 +18,17 @@
 ## Installation
 
 ```
-pnpm add @termsurf/kink
-yarn add @termsurf/kink
-npm i @termsurf/kink
+pnpm add @cluesurf/kink
+yarn add @cluesurf/kink
+npm i @cluesurf/kink
 ```
 
 ## Example
 
 ```ts
-import Kink from '@termsurf/kink'
+import Kink from '@cluesurf/kink'
 
-const host = '@termsurf/kink'
+const host = '@cluesurf/kink'
 
 type Base = {
   syntax_error: {}
@@ -62,11 +62,11 @@ try {
 
 MIT
 
-## TermSurf
+## ClueSurf
 
-This is being developed by the folks at [TermSurf](https://term.surf), a
+This is being developed by the folks at [ClueSurf](https://clue.surf), a
 California-based project for helping humanity master information and
-computation. Find us on [Twitter](https://twitter.com/termsurf),
-[LinkedIn](https://www.linkedin.com/company/termsurf), and
-[Facebook](https://www.facebook.com/termsurf). Check out our other
-[GitHub projects](https://github.com/termsurf) as well!
+computation. Find us on [Twitter](https://twitter.com/cluesurf),
+[LinkedIn](https://www.linkedin.com/company/cluesurf), and
+[Facebook](https://www.facebook.com/cluesurf). Check out our other
+[GitHub projects](https://github.com/cluesurf) as well!

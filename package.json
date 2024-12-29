@@ -1,5 +1,5 @@
 {
-  "name": "@termsurf/kink",
+  "name": "@cluesurf/kink",
   "type": "module",
   "version": "0.2.3",
   "main": "./host/index.js",
