@@ -1,0 +1,15 @@
+.vscode
+.prettierignore
+.prettierrc.json
+.eslintrc.json
+tsconfig.json
+tsconfig.lib.json
+/make
+/tmp
+/test
+/index.ts
+.dockerignore
+.claude
+CLAUDE.md
+/view
+example.ts

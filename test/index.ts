@@ -1,4 +1,5 @@
-import kink from './example.js'
+import kink from './kink'
+import './tree.test'
 
 try {
   throw kink('syntax_error', { foo: 'bar' })

@@ -1,23 +1,29 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
-    "target": "ESNext",
+    "module": "ES2020",
+    "target": "ES2020",
     "lib": ["es2020"],
     "outDir": "host",
     "rootDir": ".",
     "sourceMap": true,
     "moduleResolution": "node",
+    "skipLibCheck": true,
     "strictNullChecks": true,
     "strict": true,
     "esModuleInterop": true,
     "noUncheckedIndexedAccess": true,
     "baseUrl": ".",
+    "paths": {
+      "~/": ["./"],
+      "~/*": ["./*"]
+    },
     "noErrorTruncation": true,
     "types": ["node"],
+    "allowSyntheticDefaultImports": true,
     "typeRoots": ["node_modules/@types"],
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "declaration": true
   },
-  "include": ["*.ts", "src/**/*.ts", "*.d.ts"],
-  "exclude": ["node_modules"]
+  "include": ["index.ts", "code/**/*.ts", "test/**/*.ts"],
+  "exclude": ["node_modules/**/*", "host"]
 }

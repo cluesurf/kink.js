@@ -212,9 +212,9 @@ export class KinkList extends Kink {
   constructor(list: Array<Kink>) {
     const time = Kink.makeTime(Date.now())
     super({
-      code: Kink.makeCode('@termsurf/kink', 0),
+      code: Kink.makeCode('@cluesurf/kink', 0),
       form: 'list',
-      host: '@termsurf/kink',
+      host: '@cluesurf/kink',
       note: 'A set of errors occurred.',
       time,
     })

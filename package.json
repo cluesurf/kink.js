@@ -1,20 +1,26 @@
 {
   "name": "@cluesurf/kink",
-  "type": "module",
-  "version": "1.0.0",
-  "main": "./host/index.js",
+  "version": "1.2.0",
+  "main": "./host/code/index.js",
+  "exports": {
+    ".": {
+      "types": "./host/code/index.d.ts",
+      "default": "./host/code/index.js"
+    },
+    "./tree": {
+      "types": "./host/code/tree/node.d.ts",
+      "browser": "./host/code/tree/browser.js",
+      "node": "./host/code/tree/node.js",
+      "default": "./host/code/tree/node.js"
+    }
+  },
   "license": "MIT",
-  "files": [
-    "./host/index.js",
-    "./host/index.js.map",
-    "./host/index.d.ts"
-  ],
+  "prettier": "@cluesurf/wash/flow.json",
   "scripts": {
     "make": "tsc && tsc-alias",
     "scan": "concurrently --kill-others \"tsc -w\" \"tsc-alias -w\"",
-    "lint": "eslint --ext .ts ./make",
-    "lint:fix": "npm run lint -- --fix",
-    "test": "tsx test.ts",
+    "lint": "eslint --ext .ts . --ignore-path .gitignore --fix",
+    "test": "tsx test",
     "host": "pnpm make && npm publish --access=public"
   },
   "devDependencies": {
@@ -44,6 +50,10 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
+    "@cluesurf/show": "^1.0.2",
+    "@cluesurf/wash": "^0.6.0",
+    "@cspotcode/source-map": "^0.8.0",
+    "date-fns": "^4.1.0",
     "ts-custom-error": "^3.3.1"
   }
 }

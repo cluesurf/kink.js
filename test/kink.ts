@@ -1,6 +1,6 @@
-import Kink from './index.js'
+import Kink from '~/'
 
-const host = '@termsurf/kink'
+const host = '@cluesurf/kink'
 
 type Base = {
   syntax_error: {

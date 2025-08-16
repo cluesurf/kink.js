@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "deny": ["Bash(curl:*)", "Read(.env)", "Read(code/site/**)"]
+  },
+  "env": {
+    "CLAUDE_CODE_ENABLE_TELEMETRY": "0"
+  }
+}
