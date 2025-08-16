@@ -1,13 +1,9 @@
-import Kink from '../code'
+import Kink from '~/code/base'
 import fs from 'fs'
 import { format } from 'date-fns'
-import {
-  makeKinkText,
-  makeBaseKinkText,
-  TIME_FORM,
-} from '../code/tree/make'
+import { makeKinkText, makeBaseKinkText, TIME_FORM } from './make'
 
-const host = '@cluesurf/kink-text'
+const host = '@cluesurf/kink'
 
 type Base = {
   syntax_error: {}

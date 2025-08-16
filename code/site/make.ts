@@ -1,6 +1,6 @@
-import { KinkList } from '~/'
+import { KinkList } from '../base'
 import { loadKink } from '.'
-import { makeKinkText } from '~/code/tree'
+import { makeKinkText } from '../tree'
 
 export default function makeSiteKinkText(error: any) {
   const kink = loadKink(error)

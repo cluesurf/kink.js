@@ -1,5 +1,7 @@
 import kink from './kink'
-import './tree.test'
+
+import '~/code/tree/test'
+import '~/code/site/test'
 
 try {
   throw kink('syntax_error', { foo: 'bar' })

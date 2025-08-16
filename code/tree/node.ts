@@ -1,5 +1,5 @@
 import smc from '@cspotcode/source-map'
-import Kink from '../../index'
+import Kink from '~/code/base'
 import fs from 'fs'
 import pathResolve from 'path'
 import makeText from './make'

@@ -1,4 +1,4 @@
-import Kink from '~/'
+import Kink from '~/code/base'
 import makeText from './make'
 
 export * from './make'

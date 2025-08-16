@@ -1,8 +1,8 @@
-import Kink, { KinkList } from '~/'
+import Kink, { KinkList } from '../base'
 import { z } from 'zod'
 import _ from 'lodash'
 import kink, { host } from './kink'
-import { makeKinkText } from '~/code/tree'
+import { makeKinkText } from '../tree'
 
 export function isZodError<I>(
   input: any,

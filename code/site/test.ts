@@ -1,8 +1,8 @@
-import Kink from '~/'
+import Kink from '~/code/base'
 import fs from 'fs'
-import makeSiteKinkText from './index'
+import makeSiteKinkText from '.'
 
-const host = '@cluesurf/kink-site'
+const host = '@cluesurf/kink'
 
 type Base = {
   syntax_error: {}

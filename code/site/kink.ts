@@ -1,6 +1,6 @@
-import Kink from '~/'
+import Kink from '~/code/base'
 
-export const host = '@cluesurf/kink/site'
+export const host = '@cluesurf/kink'
 
 type BaseZodError = {
   link: Array<string | number>
