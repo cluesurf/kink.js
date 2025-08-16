@@ -1,4 +1,4 @@
-import Kink from '~/'
+import Kink from '../code'
 
 const host = '@cluesurf/kink'
 
