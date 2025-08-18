@@ -1,6 +1,6 @@
 {
   "name": "@cluesurf/kink",
-  "version": "1.2.0",
+  "version": "1.2.2",
   "main": "./host/code/index.js",
   "exports": {
     ".": {
@@ -24,6 +24,7 @@
     "host": "pnpm make && npm publish --access=public"
   },
   "devDependencies": {
+    "@cluesurf/wash": "^0.6.0",
     "@trivago/prettier-plugin-sort-imports": "^4.0.0",
     "@types/lodash": "^4.14.194",
     "@types/node": "^18.11.17",
@@ -42,7 +43,7 @@
     "eslint-plugin-simple-import-sort": "^8.0.0",
     "eslint-plugin-sort-exports": "^0.8.0",
     "eslint-plugin-sort-keys": "^2.3.5",
-    "eslint-plugin-typescript-sort-keys": "^2.1.0",
+    "eslint-plugin-typescript-sort-keys": "^3.3.0",
     "prettier": "^2.8.1",
     "ts-node": "^10.9.1",
     "tsc-alias": "^1.8.2",
@@ -51,7 +52,6 @@
   },
   "dependencies": {
     "@cluesurf/show": "^1.0.2",
-    "@cluesurf/wash": "^0.6.0",
     "@cspotcode/source-map": "^0.8.0",
     "date-fns": "^4.1.0",
     "ts-custom-error": "^3.3.1"
