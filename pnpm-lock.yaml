@@ -22,8 +22,8 @@ importers:
         version: 3.3.1
     devDependencies:
       '@cluesurf/wash':
-        specifier: ^0.6.0
-        version: 0.6.0(typescript@5.0.4)
+        specifier: ^0.6.2
+        version: 0.6.2(typescript@5.0.4)
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^4.0.0
         version: 4.0.0(@vue/compiler-sfc@3.3.4)(prettier@2.8.1)
@@ -214,8 +214,8 @@ packages:
   '@cluesurf/show@1.0.2':
     resolution: {integrity: sha512-AUac3Vzu/lip9C35x0S6jQLzo6NokZzw7/XO1FQQ100ZbApYIqvM25YBZn5+LRGC2lsW4LieBqzdeu7RxhEzRA==}
 
-  '@cluesurf/wash@0.6.0':
-    resolution: {integrity: sha512-jVgkLXH0XFNitdPJZz+bhCOAgfLO0mj1RF86ZEtyA7k72Q5kGorGbNNLb8E9bFQKblSNv85KySp2YxHu6dUVoA==}
+  '@cluesurf/wash@0.6.2':
+    resolution: {integrity: sha512-mF1+t1i/ZHnoLymHUREm18tkDw0GCk5HERUMeYsIUNcmKHcxvZvZhaxIEFngPOJun39wuz+O5iZnYzfe3urnNQ==}
     hasBin: true
 
   '@cspotcode/source-map-support@0.8.1':
@@ -363,12 +363,6 @@ packages:
     engines: {node: '>=12'}
     cpu: [x64]
     os: [win32]
-
-  '@eslint-community/eslint-utils@4.4.0':
-    resolution: {integrity: sha512-1/sA4dwrzBAyeUoQ6oxahHKmrZvsnLCg4RfxW3ZFGGmQkSNQPFNLV9CUEFQP1x9EYXHTo5p6xdhZM1Ne9p/AfA==}
-    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
-    peerDependencies:
-      eslint: ^6.0.0 || ^7.0.0 || >=8.0.0
 
   '@eslint-community/eslint-utils@4.7.0':
     resolution: {integrity: sha512-dyybb3AcajC7uha6CvhdVRJqaKyn7w2YKqKyAN37NKYgZT36w+iRb0Dymmc5qEJ549c/S31cMMSFd75bteCpCw==}
@@ -2326,7 +2320,7 @@ snapshots:
       chalk: 5.5.0
       ora: 5.4.1
 
-  '@cluesurf/wash@0.6.0(typescript@5.0.4)':
+  '@cluesurf/wash@0.6.2(typescript@5.0.4)':
     dependencies:
       '@eslint/js': 9.33.0
       eslint: 9.33.0
@@ -2411,11 +2405,6 @@ snapshots:
 
   '@esbuild/win32-x64@0.20.2':
     optional: true
-
-  '@eslint-community/eslint-utils@4.4.0(eslint@9.33.0)':
-    dependencies:
-      eslint: 9.33.0
-      eslint-visitor-keys: 3.4.1
 
   '@eslint-community/eslint-utils@4.7.0(eslint@8.31.0)':
     dependencies:
@@ -3428,7 +3417,7 @@ snapshots:
 
   eslint@9.33.0:
     dependencies:
-      '@eslint-community/eslint-utils': 4.4.0(eslint@9.33.0)
+      '@eslint-community/eslint-utils': 4.7.0(eslint@9.33.0)
       '@eslint-community/regexpp': 4.12.1
       '@eslint/config-array': 0.21.0
       '@eslint/config-helpers': 0.3.1

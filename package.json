@@ -1,6 +1,6 @@
 {
   "name": "@cluesurf/kink",
-  "version": "1.2.2",
+  "version": "1.2.4",
   "main": "./host/code/index.js",
   "exports": {
     ".": {
@@ -24,7 +24,7 @@
     "host": "pnpm make && npm publish --access=public"
   },
   "devDependencies": {
-    "@cluesurf/wash": "^0.6.0",
+    "@cluesurf/wash": "^0.6.2",
     "@trivago/prettier-plugin-sort-imports": "^4.0.0",
     "@types/lodash": "^4.14.194",
     "@types/node": "^18.11.17",
