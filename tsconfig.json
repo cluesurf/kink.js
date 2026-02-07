@@ -6,7 +6,7 @@
     "outDir": "host",
     "rootDir": ".",
     "sourceMap": true,
-    "moduleResolution": "node",
+    "moduleResolution": "Bundler",
     "skipLibCheck": true,
     "strictNullChecks": true,
     "strict": true,

@@ -1,3 +1,10 @@
+/**
+ * Node.js tree rendering with source map support.
+ *
+ * Renders Kink errors as formatted console text with
+ * source map resolution for better stack traces.
+ */
+
 import smc from '@cspotcode/source-map'
 import Kink from '~/code/base'
 import fs from 'fs'
@@ -80,7 +87,7 @@ export function makeBaseKinkText(kink: Error) {
     host: 'node',
     list: kink.stack?.split('\n') ?? [],
     note: kink.message,
-    time: Kink.makeTime(Date.now()),
+    time: String(Date.now()),
   })
 }
 

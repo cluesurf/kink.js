@@ -1,4 +1,12 @@
-import Kink from '~/code/base'
+/**
+ * Tree module test.
+ *
+ * Tests the tree error text rendering by throwing
+ * a Kink error and a native error through the
+ * uncaughtException handler.
+ */
+
+import { KinkBase } from '~/code/base'
 import fs from 'fs'
 import { format } from 'date-fns'
 import { makeKinkText, makeBaseKinkText, TIME_FORM } from './make'
@@ -6,23 +14,22 @@ import { makeKinkText, makeBaseKinkText, TIME_FORM } from './make'
 const host = '@cluesurf/kink'
 
 type Base = {
-  syntax_error: {}
+  syntax_error: {
+    take: {}
+  }
 }
 
-type Name = keyof Base
+const kinkBase = new KinkBase<Base>({
+  host,
+  makeCode: (code: number) => code.toString(16).padStart(4, '0'),
+  makeTime: (time: number) => format(time, TIME_FORM),
+})
 
-Kink.base(host, 'syntax_error', () => ({
-  code: 1,
+kinkBase.form('syntax_error', () => ({
   note: 'Syntax error',
 }))
 
-Kink.code(host, (code: number) => code.toString(16).padStart(4, '0'))
-
-Kink.time(time => format(time, TIME_FORM))
-
-export default function kink<N extends Name>(form: N, link?: Base[N]) {
-  return Kink.make(host, form, link)
-}
+const ERROR = kinkBase.make()
 
 console.log('')
 console.log('')
@@ -30,9 +37,8 @@ console.log('')
 
 // https://nodejs.org/api/errors.html
 process.on('uncaughtException', err => {
-  if (err instanceof Kink) {
-    // Kink.saveFill(err, err.link)
-    console.log(makeKinkText(err))
+  if (err instanceof Error && 'host' in err) {
+    console.log(makeKinkText(err as any))
   } else {
     console.log(makeBaseKinkText(err))
 
@@ -43,7 +49,7 @@ process.on('uncaughtException', err => {
 })
 
 setTimeout(() => {
-  throw kink('syntax_error')
+  throw ERROR('syntax_error')
 })
 
 setTimeout(() => {

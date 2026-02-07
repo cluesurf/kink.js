@@ -1,4 +1,11 @@
-import Kink from '~/code/base'
+/**
+ * Test error definitions.
+ *
+ * Demonstrates the KinkBase pattern for defining typed errors
+ * with a factory function.
+ */
+
+import { KinkBase, type Take } from '~/code/base'
 
 const host = '@cluesurf/kink'
 
@@ -12,21 +19,22 @@ type Base = {
 
 type Name = keyof Base
 
-Kink.base(
+const kinkBase = new KinkBase<Base>({
   host,
-  'syntax_error',
-  (take: Base['syntax_error']['take']) => ({
-    code: 1,
-    link: take,
-    note: 'Syntax error',
-  }),
-)
+  makeCode: (code: number) => code.toString(16).padStart(4, '0'),
+})
 
-Kink.code(host, (code: number) => code.toString(16).padStart(4, '0'))
+kinkBase.form('syntax_error', take => ({
+  link: take,
+  note: 'Syntax error',
+  show: ['foo'],
+}))
+
+const ERROR = kinkBase.make()
 
 export default function kink<N extends Name>(
   form: N,
-  take?: Base[N]['take'],
+  take?: Take<Base, N>,
 ) {
-  return Kink.make(host, form, take)
+  return ERROR(form, take)
 }

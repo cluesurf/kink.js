@@ -1,3 +1,10 @@
+/**
+ * Main test runner.
+ *
+ * Imports sub-tests and exercises the error factory
+ * to verify basic functionality.
+ */
+
 import kink from './kink'
 
 import '~/code/tree/test'

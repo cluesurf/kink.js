@@ -1,9 +1,17 @@
-import Kink from '~/code/base'
+/**
+ * Built-in error definitions for the @cluesurf/kink package.
+ *
+ * Defines errors for API call failures, timeouts, and Zod
+ * validation issues. Uses KinkBase for instance-based registry
+ * with auto-incrementing codes.
+ */
+
+import { KinkBase, type Take } from '~/code/base'
 
 export const host = '@cluesurf/kink'
 
 type BaseZodError = {
-  link: Array<string | number>
+  link: (string | number)[]
   message: string
 }
 
@@ -15,83 +23,55 @@ type Base = {
     take: {
       link: string
     }
-    // base: {
-    //   url: string
-    // }
-    // fill: {
-    //   url: string
-    // }
   }
   form_fail: {
     take: BaseZodError & {
       have: string
-      link: Array<string>
+      link: string[]
       need: string
     }
   }
   form_link_fail: {
     take: BaseZodError & {
-      list: Array<string>
+      list: string[]
     }
   }
 }
 
 type Name = keyof Base
 
-let CODE_INDEX = 1
-
-const CODE = {
-  call_fail: CODE_INDEX++,
-  call_time_meet: CODE_INDEX++,
-  form_fail: CODE_INDEX++,
-  form_link_fail: CODE_INDEX++,
-}
-
-Kink.code(host, (code: number) => code.toString(16).padStart(4, '0'))
-
-Kink.base(
+const kinkBase = new KinkBase<Base>({
   host,
-  'call_time_meet',
-  (take: Base['call_time_meet']['take']) => ({
-    code: CODE.call_time_meet,
-    link: take.link,
-    note: 'Request timeout.',
-  }),
-)
+  makeCode: (code: number) => code.toString(16).padStart(4, '0'),
+})
 
-Kink.base(host, 'call_fail', () => ({
-  code: CODE.call_fail,
-  note: 'System unable to make request currently.',
+kinkBase.form('call_fail', () => ({
+  note: 'System unable to make request currently',
 }))
 
-Kink.base(host, 'form_fail', (take: Base['form_fail']['take']) => ({
-  code: CODE.form_fail,
-  have: take.have,
-  hint: take.message,
-  link: take.link,
-  need: take.need,
-  note: 'Invalid link type.',
+kinkBase.form('call_time_meet', take => ({
+  link: take,
+  note: 'Request timeout',
 }))
 
-// https://github.com/colinhacks/zod/blob/master/ERROR_HANDLING.md
-Kink.base(
-  host,
-  'form_link_fail',
-  (take: Base['form_link_fail']['take']) => ({
-    code: CODE.form_link_fail,
-    hint: take.message,
-    link: take.link,
-    list: take.list,
-    note: 'Unrecognized keys in object.',
-  }),
-)
+kinkBase.form('form_fail', take => ({
+  link: take,
+  note: 'Invalid link type',
+}))
+
+kinkBase.form('form_link_fail', take => ({
+  link: take,
+  note: 'Unrecognized keys in object',
+}))
+
+const ERROR = kinkBase.make()
 
 export default function makeBase<N extends Name>(
   form: N,
-  link?: Base[N]['take'],
-  siteCode?: number,
+  link?: Take<Base, N>,
+  mark?: number,
 ) {
-  const kink = Kink.make(host, form, link)
-  kink.siteCode = siteCode
+  const kink = ERROR(form, link)
+  kink.mark = mark
   return kink
 }
