@@ -6,7 +6,7 @@
  * production-safe serialization via toJSON() which only exposes
  * fields listed in `show`, and full serialization via toTestJSON()
  * for development and testing. Wraps an optional original error
- * as `base` and captures stack trace lines in `trace`.
+ * as `base` and captures stack trace lines in `flow`.
  */
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -110,7 +110,11 @@ export default class Kink extends CustomError {
   link: Link
 
   /**
-   * HTTP status code hint for API responses.
+   * HTTP status a server should answer with when this error
+   * reaches a request handler. Set from the form definition,
+   * the registry fallback, or the throw site. Undefined when
+   * none of them named a status, leaving the choice to the
+   * handler.
    */
 
   mark?: number
@@ -125,7 +129,7 @@ export default class Kink extends CustomError {
    * Stack trace lines captured at error creation.
    */
 
-  trace: Array<string>
+  flow: Array<string>
 
   /**
    * Field names from link (plus 'base') visible in prod toJSON().
@@ -182,7 +186,7 @@ export default class Kink extends CustomError {
     this.mark = mark
     this.base = base ?? null
     this.show = show
-    this.trace = this.stack?.split('\n') ?? []
+    this.flow = this.stack?.split('\n') ?? []
   }
 
   /**
@@ -248,6 +252,11 @@ export default class Kink extends CustomError {
 /**
  * A collection of Kink errors, used when multiple
  * validation errors occur at once (e.g. Zod parsing).
+ *
+ * The list's own `mark` is the highest status among its
+ * members, so a handler answering with it never reports a
+ * milder status than one of the errors inside deserved. An
+ * explicit `mark` overrides that.
  */
 
 // eslint-disable-next-line sort-exports/sort-exports
@@ -258,14 +267,33 @@ export class KinkList extends Kink {
 
   list: Array<Kink>
 
-  constructor(list: Array<Kink>) {
+  constructor(list: Array<Kink>, mark?: number) {
     super({
       code: '0000',
       form: 'list',
       host: '@cluesurf/kink',
+      mark: mark ?? readListMark(list),
       note: 'A set of errors occurred.',
       time: String(Date.now()),
     })
     this.list = list
   }
+}
+
+/**
+ * Highest HTTP status among a set of errors, or undefined
+ * when none of them named one.
+ */
+
+function readListMark(list: Array<Kink>): number | undefined {
+  let mark: number | undefined
+  for (const kink of list) {
+    if (
+      kink.mark !== undefined &&
+      (mark === undefined || kink.mark > mark)
+    ) {
+      mark = kink.mark
+    }
+  }
+  return mark
 }

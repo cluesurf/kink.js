@@ -4,6 +4,11 @@
  * Provides Zod error integration, converting ZodError instances
  * into structured Kink errors. Also provides loadKink/loadKinkList
  * for normalizing any caught error into a Kink instance.
+ *
+ * Every error produced here carries a `mark`, the HTTP status a
+ * handler should answer with. Zod issues are 406, a plain Error
+ * of unknown origin is 500, and a KinkList takes the highest
+ * status of its members.
  */
 
 import Kink, { KinkList } from '../base'
@@ -16,7 +21,9 @@ export function isZodError<I>(
 ): input is z.ZodSafeParseError<I> {
   return Boolean(
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    input && !(input as Record<string, unknown>).success && 'error' in (input as Record<string, unknown>),
+    input &&
+    !(input as Record<string, unknown>).success &&
+    'error' in (input as Record<string, unknown>),
   )
 }
 
@@ -60,7 +67,7 @@ function makeBaseKink(
   { mark }: { mark?: number } = {},
 ): Kink {
   const time = String(Date.now())
-  const kinkError = new Kink({
+  return new Kink({
     base: error,
     code:
       'code' in error
@@ -70,11 +77,10 @@ function makeBaseKink(
         : '0000',
     form: 'system_error',
     host: 'system',
+    mark,
     note: error.message,
     time,
   })
-  kinkError.mark = mark
-  return kinkError
 }
 
 export function loadZodErrorJSON(error: z.ZodError) {
@@ -83,37 +89,28 @@ export function loadZodErrorJSON(error: z.ZodError) {
       const err = issue as unknown as Record<string, unknown>
       switch (issue.code) {
         case z.ZodIssueCode.invalid_type:
-          return kink(
-            'form_fail',
-            {
-              have: err.received as string,
-              link: issue.path.map(x => String(x)),
-              message: issue.message,
-              need: err.expected as string,
-            },
-            406,
-          )
+          return kink('form_fail', {
+            have: err.received as string,
+            link: issue.path.map(x => String(x)),
+            message: issue.message,
+            need: err.expected as string,
+          })
         case z.ZodIssueCode.unrecognized_keys:
-          return kink(
-            'form_link_fail',
-            {
-              link: issue.path.map(x => String(x)) as (string | number)[],
-              list: err.keys as string[],
-              message: issue.message,
-            },
-            406,
-          )
+          return kink('form_link_fail', {
+            link: issue.path.map(x => String(x)) as (string | number)[],
+            list: err.keys as string[],
+            message: issue.message,
+          })
         default: {
           const time = String(Date.now())
-          const defaultKink = new Kink({
+          return new Kink({
             code: '0000',
             form: 'z.ZodError',
             host: host,
+            mark: 406,
             note: issue.message,
             time,
           })
-          defaultKink.mark = 406
-          return defaultKink
         }
       }
     }),

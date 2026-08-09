@@ -46,32 +46,40 @@ const kinkBase = new KinkBase<Base>({
 })
 
 kinkBase.form('call_fail', () => ({
+  mark: 503,
   note: 'System unable to make request currently',
 }))
 
 kinkBase.form('call_time_meet', take => ({
   link: take,
+  mark: 504,
   note: 'Request timeout',
 }))
 
 kinkBase.form('form_fail', take => ({
   link: take,
+  mark: 406,
   note: 'Invalid link type',
 }))
 
 kinkBase.form('form_link_fail', take => ({
   link: take,
+  mark: 406,
   note: 'Unrecognized keys in object',
 }))
 
 const ERROR = kinkBase.make()
+
+/**
+ * Build one of this package's errors. `mark` is optional and
+ * only needed to answer with a status other than the one the
+ * form above declares.
+ */
 
 export default function makeBase<N extends Name>(
   form: N,
   link?: Take<Base, N>,
   mark?: number,
 ) {
-  const kink = ERROR(form, link)
-  kink.mark = mark
-  return kink
+  return ERROR(form, link, undefined, mark)
 }
